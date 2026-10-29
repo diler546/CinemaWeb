@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="КАДР — учебный сервис бронирования билетов в кинотеатр. Выберите фильм, сеанс и места на схеме зала.">
+  <title>КАДР — бронирование билетов в кинотеатр</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23FFB703'/%3E%3Ctext x='32' y='45' font-family='Arial,sans-serif' font-size='38' font-weight='900' text-anchor='middle' fill='%23111008'%3EК%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Перейти к содержанию</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#top" aria-label="КАДР кинотеатр — на главную">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="12" cy="12" r="8.5"></circle>
+            <circle cx="12" cy="12" r="2.2" fill="currentColor" stroke="none"></circle>
+            <circle cx="12" cy="6.1" r="1.35" fill="currentColor" stroke="none"></circle>
+            <circle cx="17" cy="14.2" r="1.35" fill="currentColor" stroke="none"></circle>
+            <circle cx="7" cy="14.2" r="1.35" fill="currentColor" stroke="none"></circle>
+          </svg>
+        </span>
+        <span class="brand-text">
+          <strong>КАДР</strong>
+          <span>кинотеатр</span>
+        </span>
+      </a>
+
+      <p class="demo-note">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="5" y="10" width="14" height="10" rx="2.5"></rect>
+          <path d="M8.5 10V7.5a3.5 3.5 0 0 1 7 0V10"></path>
+        </svg>
+        <span>Учебное демо: бронирования сохраняются только в этом браузере</span>
+      </p>
+
+      <a class="tickets-link" id="nav-tickets-link" href="#tickets">
+        <span>Мои билеты</span>
+        <span class="ticket-count" id="nav-ticket-count" aria-hidden="true">0</span>
+      </a>
+    </div>
+  </header>
+
+  <div class="notices" id="notices" aria-live="polite"></div>
+
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-main">
+        <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>Сеансы на сегодня</p>
+        <h1 id="hero-title">Ваше место.<br><span>Ваш сеанс.</span></h1>
+        <p class="hero-lead">Выберите фильм, удобное время и места на схеме зала. Тёмный зал, большой экран и билет всего за 450&nbsp;₽.</p>
+      </div>
+
+      <aside class="hero-card" aria-label="Сегодня в кинотеатре">
+        <span class="hero-card__badge">В прокате</span>
+        <p class="hero-card__kicker">Сегодня в «КАДРе»</p>
+        <p class="hero-card__big">4 фильма</p>
+        <p class="hero-card__line">8 сеансов · 24 места в зале</p>
+        <div class="hero-card__divider" aria-hidden="true"></div>
+        <div class="hero-card__price">
+          <span>Единый тариф</span>
+          <strong>450 ₽</strong>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section showtime-section" aria-labelledby="showtime-title">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Афиша</p>
+          <h2 id="showtime-title">Выберите фильм</h2>
+        </div>
+        <p class="section-hint">Сначала фильм — затем сеанс и места</p>
+      </div>
+
+      <div class="film-rail" id="film-list" role="group" aria-label="Фильмы в прокате"></div>
+      <div class="session-panel" id="session-panel"></div>
+    </section>
+
+    <section class="booking-section" aria-labelledby="hall-title">
+      <div class="hall-card">
+        <div class="hall-head">
+          <div>
+            <p class="eyebrow">Схема зала</p>
+            <h2 id="hall-title">Зал 1</h2>
+          </div>
+          <div class="hall-head__meta">
+            <span id="hall-film">—</span>
+            <span id="hall-session">—</span>
+          </div>
+        </div>
+
+        <div class="hall-stage" id="hall-stage" role="group" aria-label="Схема зала: 4 ряда по 6 мест, экран внизу">
+          <div class="seat-rows" id="hall-grid"></div>
+          <div class="screen-zone">
+            <div class="screen-bar" aria-hidden="true"></div>
+            <span class="screen-label">Экран</span>
+          </div>
+        </div>
+
+        <ul class="legend" aria-label="Обозначения мест">
+          <li><span class="legend-swatch legend-swatch--free" aria-hidden="true"></span>Свободно</li>
+          <li><span class="legend-swatch legend-swatch--selected" aria-hidden="true">✓</span>Выбрано</li>
+          <li><span class="legend-swatch legend-swatch--busy" aria-hidden="true">×</span>Занято</li>
+        </ul>
+        <p class="hall-tariff">Единый тариф — <strong>450 ₽</strong> за место</p>
+      </div>
+
+      <aside class="order-card" aria-label="Оформление заказа">
+        <div id="order-panel"></div>
+      </aside>
+    </section>
+
+    <section class="tickets-section" id="tickets" aria-labelledby="tickets-title">
+      <div class="tickets-head">
+        <div>
+          <p class="eyebrow">Сохранено в браузере</p>
+          <h2 id="tickets-title" tabindex="-1" data-focus-key="tickets-title">Мои билеты <span class="tickets-count" id="tickets-count">0</span></h2>
+        </div>
+        <button class="btn btn--danger-ghost" id="reset-all" type="button" disabled>Сбросить все брони</button>
+      </div>
+      <div class="tickets-grid" id="tickets-list"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-brand">КАДР <span>кинотеатр</span></p>
+      <p>Учебное демо: бронирования сохраняются только в этом браузере. Реальная бронь и оплата не оформляются.</p>
+      <p class="footer-year">© 2026</p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <dialog class="reset-dialog" id="reset-dialog" aria-labelledby="reset-title">
+    <form method="dialog">
+      <div class="dialog-inner">
+        <span class="dialog-icon" aria-hidden="true">!</span>
+        <h2 id="reset-title">Сбросить все брони?</h2>
+        <p>Все ваши билеты будут удалены из этого браузера, а места снова станут свободными. Действие нельзя отменить.</p>
+        <div class="dialog-actions">
+          <button class="btn btn--ghost" type="submit" value="cancel">Оставить билеты</button>
+          <button class="btn btn--danger" type="submit" value="confirm">Сбросить всё</button>
+        </div>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>
