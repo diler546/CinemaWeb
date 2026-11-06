@@ -17,7 +17,7 @@
     <div class="header-inner">
       <a class="brand" href="#top" aria-label="КАДР кинотеатр — на главную">
         <span class="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
             <circle cx="12" cy="12" r="8.5"></circle>
             <circle cx="12" cy="12" r="2.2" fill="currentColor" stroke="none"></circle>
             <circle cx="12" cy="6.1" r="1.35" fill="currentColor" stroke="none"></circle>
@@ -57,8 +57,10 @@
       </div>
 
       <aside class="hero-card" aria-label="Сегодня в кинотеатре">
-        <span class="hero-card__badge">В прокате</span>
-        <p class="hero-card__kicker">Сегодня в «КАДРе»</p>
+        <div class="hero-card__top">
+          <span class="hero-card__badge">В прокате</span>
+          <span class="hero-card__date">Сегодня</span>
+        </div>
         <p class="hero-card__big">4 фильма</p>
         <p class="hero-card__line">8 сеансов · 24 места в зале</p>
         <div class="hero-card__divider" aria-hidden="true"></div>
@@ -69,7 +71,7 @@
       </aside>
     </section>
 
-    <section class="section showtime-section" aria-labelledby="showtime-title">
+    <section class="showtime-section" id="showtime" aria-labelledby="showtime-title">
       <div class="section-head">
         <div>
           <p class="eyebrow">Афиша</p>
@@ -105,8 +107,8 @@
 
         <ul class="legend" aria-label="Обозначения мест">
           <li><span class="legend-swatch legend-swatch--free" aria-hidden="true"></span>Свободно</li>
-          <li><span class="legend-swatch legend-swatch--selected" aria-hidden="true">✓</span>Выбрано</li>
-          <li><span class="legend-swatch legend-swatch--busy" aria-hidden="true">×</span>Занято</li>
+          <li><span class="legend-swatch legend-swatch--selected" aria-hidden="true"></span>Выбрано</li>
+          <li><span class="legend-swatch legend-swatch--busy" aria-hidden="true"></span>Занято</li>
         </ul>
         <p class="hall-tariff">Единый тариф — <strong>450 ₽</strong> за место</p>
       </div>

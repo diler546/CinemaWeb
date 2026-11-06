@@ -1,5 +1,11 @@
 /**
  * Данные афиши и схема зала.
+ *
+ * Постеры лежат в папке img/. Чтобы заменить картинку, положите свой файл
+ * в img/ и укажите его имя в поле poster у нужного фильма.
+ * Текущие имена: Forgotten-Island.webp, Resident-Evil.jpg, Spider-Man.jpg,
+ * The Odyssey.jpg. Можно использовать и стандартные film1.jpg … film4.jpg.
+ *
  * Все восемь сеансов получают собственную стабильную «случайную» занятость:
  * при перезагрузке страницы она не меняется, а брони пользователя накладываются сверху.
  */
@@ -12,14 +18,13 @@ export const SEATS_TOTAL = ROWS * SEATS_PER_ROW;
 export const films = [
   {
     id: 'film-northern-light',
-    title: 'Северное сияние',
-    genre: 'Драма',
+    title: 'Остров забвения',
+    genre: 'Комедия',
     duration: 118,
     rating: '12+',
     year: 2026,
     tagline: 'Свет возвращается туда, где его ждут.',
-    posterStyle: 'aurora',
-    posterWord: 'СВЕТ',
+    poster: 'img/Forgotten-Island.webp',
     palette: { from: '#0d5c63', to: '#06171b', accent: '#64f4d2' },
     sessions: [
       { id: 's1', time: '14:00', hall: 'Зал 1', format: '2D' },
@@ -28,14 +33,13 @@ export const films = [
   },
   {
     id: 'film-red-line',
-    title: 'Красная линия',
+    title: 'Обитель зла',
     genre: 'Триллер',
     duration: 124,
     rating: '18+',
     year: 2025,
     tagline: 'Одна ошибка. Восемь минут до полуночи.',
-    posterStyle: 'line',
-    posterWord: 'ЛИНИЯ',
+    poster: 'img/Resident-Evil.jpg',
     palette: { from: '#7c1d24', to: '#1a070a', accent: '#ff6b57' },
     sessions: [
       { id: 's1', time: '14:00', hall: 'Зал 2', format: '2D' },
@@ -44,14 +48,13 @@ export const films = [
   },
   {
     id: 'film-depth',
-    title: 'Глубина',
+    title: 'Человек-паук новый день',
     genre: 'Фантастика',
     duration: 132,
     rating: '12+',
     year: 2026,
-    tagline: 'На глубине 4 000 метров тишина звучит громче.',
-    posterStyle: 'orbit',
-    posterWord: 'ГЛУБИНА',
+    tagline: 'Обратно к истокам.',
+    poster: 'img/Spider-Man.jpg',
     palette: { from: '#1b2a6b', to: '#080c20', accent: '#7aa7ff' },
     sessions: [
       { id: 's1', time: '14:00', hall: 'Зал 1', format: '2D' },
@@ -60,14 +63,13 @@ export const films = [
   },
   {
     id: 'film-last-show',
-    title: 'Последний сеанс',
-    genre: 'Комедия',
+    title: 'Одиссея',
+    genre: 'Фантастика',
     duration: 104,
     rating: '16+',
     year: 2025,
     tagline: 'Сегодня всё пойдёт не по сценарию.',
-    posterStyle: 'sun',
-    posterWord: 'СЕАНС',
+    poster: 'img/The Odyssey.jpg',
     palette: { from: '#805112', to: '#1c1007', accent: '#ffd166' },
     sessions: [
       { id: 's1', time: '14:00', hall: 'Зал 2', format: '2D' },

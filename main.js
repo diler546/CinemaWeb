@@ -129,6 +129,20 @@ function posterStyle(film) {
   return `--poster-a:${film.palette.from};--poster-b:${film.palette.to};--poster-accent:${film.palette.accent}`;
 }
 
+function posterMarkup(film, className, extra = '') {
+  return `
+    <span class="poster-frame ${className}" style="${posterStyle(film)}">
+      <span class="poster-frame__fallback" aria-hidden="true">${escapeHtml(film.title)}</span>
+      <img
+        class="poster-frame__img"
+        src="${escapeHtml(film.poster)}"
+        alt=""
+        decoding="async"
+      >
+      ${extra}
+    </span>`;
+}
+
 /* ---------- Сообщения ---------- */
 
 function addNotice(text, type = 'error', source = 'storage') {
@@ -286,6 +300,11 @@ function renderFilms() {
   dom.filmList.innerHTML = films
     .map((film, index) => {
       const isSelected = film.id === state.filmId;
+      const overlays = `
+        <span class="film-card__selected" aria-hidden="true">Выбран</span>
+        <span class="poster__rating" aria-hidden="true">${film.rating}</span>
+        <span class="poster__index" aria-hidden="true">0${index + 1}</span>`;
+
       return `
         <button
           class="film-card"
@@ -295,13 +314,7 @@ function renderFilms() {
           data-focus-key="film-${film.id}"
           aria-pressed="${isSelected}"
         >
-          <span class="poster poster--${film.posterStyle}" style="${posterStyle(film)}">
-            <span class="poster__orb" aria-hidden="true"></span>
-            <span class="film-card__selected" aria-hidden="true">Выбран</span>
-            <span class="poster__rating">${film.rating}</span>
-            <span class="poster__index">0${index + 1}</span>
-            <span class="poster__word" aria-hidden="true">${film.posterWord}</span>
-          </span>
+          ${posterMarkup(film, 'film-card__poster', overlays)}
           <span class="film-card__body">
             <span class="film-card__meta">${film.genre} · ${film.duration} мин</span>
             <span class="film-card__title">${film.title}</span>
@@ -320,9 +333,7 @@ function renderSessionPanel() {
 
   dom.sessionPanel.innerHTML = `
     <div class="session-film">
-      <span class="session-film__thumb" style="${posterStyle(film)}" aria-hidden="true">
-        <span>${film.posterWord}</span>
-      </span>
+      ${posterMarkup(film, 'session-film__thumb')}
       <div>
         <p class="session-film__label">Выбранный фильм</p>
         <h3>${film.title}</h3>
@@ -392,7 +403,12 @@ function renderHall() {
           aria-label="Ряд ${row}, Место ${seat}, ${status}"
           aria-pressed="${isSelected}"
           ${isOccupied ? 'disabled' : ''}
-        ><span aria-hidden="true">${seat}</span></button>`);
+        >
+          <span class="seat__back" aria-hidden="true">
+            <span class="seat__number">${seat}</span>
+          </span>
+          <span class="seat__cushion" aria-hidden="true"></span>
+        </button>`);
     }
 
     rows.push(`
@@ -449,7 +465,7 @@ function renderOrder() {
     </div>
 
     <div class="order-film">
-      <span class="order-poster" style="${posterStyle(film)}" aria-hidden="true"><span>${film.posterWord}</span></span>
+      ${posterMarkup(film, 'order-poster')}
       <div class="order-film__info">
         <h3>${film.title}</h3>
         <p>${session.time} · ${session.hall} · ${session.format}</p>
@@ -460,7 +476,7 @@ function renderOrder() {
       <span class="selection-label">Выбранные места</span>
       ${
         count === 0
-          ? '<p class="selection-empty">Пока ничего не выбрано. Нажмите на свободное место в схеме зала — можно выбрать сразу несколько.</p>'
+          ? '<p class="selection-empty">Пока ничего не выбрано. Нажмите на свободное кресло в схеме зала — можно выбрать сразу несколько.</p>'
           : `<ul class="selected-chips">${chips}</ul>`
       }
     </div>
@@ -793,6 +809,16 @@ document.addEventListener('click', (event) => {
       break;
   }
 });
+
+document.addEventListener(
+  'error',
+  (event) => {
+    const image = event.target;
+    if (!(image instanceof HTMLImageElement) || !image.classList.contains('poster-frame__img')) return;
+    image.closest('.poster-frame')?.classList.add('is-missing');
+  },
+  true,
+);
 
 dom.resetButton.addEventListener('click', () => {
   if (dom.resetButton.disabled) return;
